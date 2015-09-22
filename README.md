@@ -11,9 +11,16 @@ IBM Containers is an Enterprise-grade Docker container service, available on IBM
 I'll let the [SD Elements](http://sdelements.github.io/lets-chat/) team describe Let's Chat here:
 > Let's Chat is a persistent messaging application that runs on Node.js and MongoDB. It's designed to be easily deployable and fits well with small, intimate teams.
 
-It's quick to start and even simpler to use.  Once the application is deployed, follow the steps below to start collaborating with your teammates or audience immediately!
+Similar to Slack, it's quick to start and even simpler to use.  Once the application is deployed, follow the steps below to start collaborating with your teammates or audience immediately!
 
 _TBD Architecture Diagram_
+
+**Pre-requisites:**
+1. An active IBM Bluemix account.  It can be a trial account.
+
+2. An active Space inside your IBM Bluemix Organization that is configured to use IBM Containers.
+
+**Sample application walkthrough**
 
 1. Step 1
  
@@ -51,6 +58,7 @@ There is no API made available through this sample application.
 * [IBM Bluemix](https://bluemix.net/)  
 * [IBM  Bluemix Documentation](https://www.ng.bluemix.net/docs/)  
 * [IBM Bluemix Developers Community](http://developer.ibm.com/bluemix)
+
 #### IBM Containers
 * [IBM Containers](https://console.ng.bluemix.net/solutions/open-architecture/)
 * _TBD_
