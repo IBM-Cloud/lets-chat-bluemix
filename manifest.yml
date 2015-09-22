@@ -1,0 +1,16 @@
+---
+#lets-chat-bridge manifest.yml
+declared-services:
+	lets-chat-mongo:
+		label: mongolab
+		plan: sandbox
+applications:
+- services:	
+  - lets-chat-mongo
+  name: lets-chat-bridge
+  host: lets-chat-bridge
+  no-hostname: true
+  no-route: true
+  domain: mybluemix.net
+  disk-quota: 1M
+  memory: 64M
