@@ -33,12 +33,12 @@ _TBD Architecture Diagram_
 3. Step 3
 
 ## Repository structure
-`**.bluemix/**` - The exported YAML document describing the Advanced Pipeline below.  
-`**bridge-app/**` - The manifest.yml and placeholder files to deploy the lightest-weight CloudFoundry app necessary to bind container instances.  
-`**lets-chat/**` - The artifacts necessary for building a Docker image for Let's Chat to run on IBM Containers.  
-`**lets-chat/scripts/**` - The startup script which the Dockerfile uses as it's entrypoint executable.  It calls a [extract-vcap.py][extract_vcap_url] utility script to extract the Mongo credentials from the embedded VCAP_SERVICES.  
+**`.bluemix/`** - The exported YAML document describing the Advanced Pipeline below.  
+**`bridge-app/`** - The manifest.yml and placeholder files to deploy the lightest-weight CloudFoundry app necessary to bind container instances.  
+**`lets-chat/`** - The artifacts necessary for building a Docker image for Let's Chat to run on IBM Containers.  
+**`lets-chat/scripts/`** - The startup script which the Dockerfile uses as it's entrypoint executable.  It calls a [extract-vcap.py][extract_vcap_url] utility script to extract the Mongo credentials from the embedded VCAP_SERVICES.  
 For more information on IBM Containers and the interaction with VCAP_SERVICES, you can read [this blog post][containers_bluemix_blog] on the Bluemix blog.  
-`**nginx/**` - The artifacts necessary for building a Docker image to load-balance across multiple Let's Chat servers.  Currently, it contains a static nginx.conf, which load-balances across two Let's Chat servers.  
+**`nginx/`** - The artifacts necessary for building a Docker image to load-balance across multiple Let's Chat servers.  Currently, it contains a static nginx.conf, which load-balances across two Let's Chat servers.  
 
 ## Running the app on Bluemix
 Let's Chat is a straight-forward NodeJS application, requiring only a MongoDB as its sole datastore.  IBM Bluemix provides you with all the necessary services to run Let's Chat with minimal management overhead.  Instead of deploying and managing your own MongoDB server, this sample application leverages one of the available MongoDB services available on Bluemix today.  The provided build pipeline then dynamically links the running container instances with the available MongoDB service instance at deploy time, making this a very portable and repeatable deployment process.
@@ -158,6 +158,7 @@ There is no API made available through this sample application.
 
 #### IBM Containers
 * [IBM Containers][ibm_containers_url]
+* [IBM Containers Service Overview video](https://www.youtube.com/watch?v=WMUiBE_7MoU)
 * [IBM Containers and Bluemix Services blog post][containers_bluemix_blog]
 * _TBD_
 
