@@ -9,7 +9,7 @@
 </p>
 
 
-This repository will show you how to run the open-source [_Let's Chat_](http://sdelements.github.io/lets-chat/) application on IBM Containers in IBM Bluemix.  The provided Dockerfiles, scripts, and pipeline file will build & deploy the necessary Docker images for the Let's Chat application and an nginx load-balancer and link the running containers to a MongoDB service instance in IBM Bluemix.
+This repository will show you how to run the open-source [_Let's Chat_][lets_chat_url] application on [IBM Containers][ibm_containers_url] in [IBM Bluemix][bluemix_signup_url].  The provided Dockerfiles, scripts, and pipeline file will build & deploy the necessary Docker images for the Let's Chat application and an nginx load-balancer and link the running containers to a MongoDB service instance in IBM Bluemix.
 
 IBM Containers is an Enterprise-grade Docker container service, available on IBM Bluemix.  Provided here are all the necessary artifacts to build and deploy the sample application and deploy it on IBM Containers, leveraging additional IBM Bluemix services where appropriate.  As additional capabilities are made available through IBM Bluemix, this sample application repository will be updated to take advantage of them as appropriate.
 
@@ -19,7 +19,7 @@ IBM Containers is an Enterprise-grade Docker container service, available on IBM
 --->
 
 ## How it works
-I'll let the [SD Elements](http://sdelements.github.io/lets-chat/) team describe Let's Chat here:
+I'll let the [SD Elements][lets_chat_url] team describe Let's Chat here:
 > Let's Chat is a persistent messaging application that runs on Node.js and MongoDB. It's designed to be easily deployable and fits well with small, intimate teams.
 
 Similar to Slack, it's quick to start and even simpler to use.  Once the application is deployed, follow the steps below to start collaborating with your teammates or audience immediately!
@@ -33,11 +33,12 @@ _TBD Architecture Diagram_
 3. Step 3
 
 ## Repository structure
-**.bluemix** - The exported YAML document describing the Advanced Pipeline below.  
-**bridge-app** - The manifest.yml and placeholder files to deploy the lightest-weight CloudFoundry app necessary to bind container instances.  
-**lets-chat** - The artifacts necessary for building a Docker image for Let's Chat to run on IBM Containers.  
-**lets-chat/scripts** - The startup script which the Dockerfile uses as it's entrypoint executable.  It calls this [extract-vcap.py][extract_vcap_url] utility script to extract the Mongo credentials from the embedded VCAP_SERVICES.  For more information on IBM Containers and the interaction with VCAP_SERVICES, you can read [this blog post][containers_bluemix_blog] on the Bluemix blog.  
-**nginx** - The artifacts necessary for building a Docker image to load-balance across multiple Let's Chat servers.  Currently, it contains a static nginx.conf, which load-balances across two Let's Chat servers.  
+`**.bluemix/**` - The exported YAML document describing the Advanced Pipeline below.  
+`**bridge-app/**` - The manifest.yml and placeholder files to deploy the lightest-weight CloudFoundry app necessary to bind container instances.  
+`**lets-chat/**` - The artifacts necessary for building a Docker image for Let's Chat to run on IBM Containers.  
+`**lets-chat/scripts/**` - The startup script which the Dockerfile uses as it's entrypoint executable.  It calls a [extract-vcap.py][extract_vcap_url] utility script to extract the Mongo credentials from the embedded VCAP_SERVICES.  
+For more information on IBM Containers and the interaction with VCAP_SERVICES, you can read [this blog post][containers_bluemix_blog] on the Bluemix blog.  
+`**nginx/**` - The artifacts necessary for building a Docker image to load-balance across multiple Let's Chat servers.  Currently, it contains a static nginx.conf, which load-balances across two Let's Chat servers.  
 
 ## Running the app on Bluemix
 Let's Chat is a straight-forward NodeJS application, requiring only a MongoDB as its sole datastore.  IBM Bluemix provides you with all the necessary services to run Let's Chat with minimal management overhead.  Instead of deploying and managing your own MongoDB server, this sample application leverages one of the available MongoDB services available on Bluemix today.  The provided build pipeline then dynamically links the running container instances with the available MongoDB service instance at deploy time, making this a very portable and repeatable deployment process.
@@ -89,7 +90,7 @@ Only one of the Delivery Pipeline walkthroughs below is necessary.  You do not n
     1.  **BIND_TO**  lets-chat-bridge (or your app name used in [Pre-req Step 3](#setup-bluemix-pre-requisites))  
 	2.  **CONTAINER_SIZE**  tiny  
 24.  This pipeline will now build whenever a commit is pushed to the forked repository.  Optionally, you can click the **Run Stage** button in the Build stage to kick off the delivery pipeline.  
-25.  Once the Build and Deploy stages have completed successfully, you can access the running Let's Chat server by the public IP address assigned.  This is available through the log of the deploy stage, the Bluemix UI, or the ``cf ic ip list`` command.  
+25.  Once the Build and Deploy stages have completed successfully, you can access the running Let's Chat server by the public IP address assigned.  This is available through the log of the deploy stage, the Bluemix UI, or the `cf ic ip list` command.  
 
 #### Configure an Advanced Delivery Pipeline
 > Use this Advanced Pipeline to deploy two Let's Chat containers and one nginx container handling the load-balancing across them, accessed via http://{nginx_public_ip}  
@@ -141,7 +142,7 @@ Only one of the Delivery Pipeline walkthroughs below is necessary.  You do not n
 	  5.  **Optional deploy arguments:**  --link __CIDSA__:lets-chat-1 --link __CIDSB__:lets-chat-2  
       6.  **Deployer Script:**  Use this [nginx-deploy.sh][gist_nginx_deploy_url] gist  
 35.  This pipeline will now build whenever a commit is pushed to the forked repository.  Optionally, you can click the **Run Stage** button in the Build stage to kick off the delivery pipeline.  
-36.  Once the Build and both Deploy stages have completed successfully, you can access the running Let's Chat server by the public IP address assigned.  This is available through the log of the nginx deploy stage, the Bluemix UI, or the ``cf ic ip list`` command.  
+36.  Once the Build and both Deploy stages have completed successfully, you can access the running Let's Chat server by the public IP address assigned.  This is available through the log of the nginx deploy stage, the Bluemix UI, or the `cf ic ip list` command.  
 
 ## Run the app locally
 _TBD How to run locally and still leverage Bluemix services dynamically!_
@@ -156,7 +157,7 @@ There is no API made available through this sample application.
 * [IBM Bluemix Developers Community](http://developer.ibm.com/bluemix)
 
 #### IBM Containers
-* [IBM Containers](https://console.ng.bluemix.net/solutions/open-architecture/)
+* [IBM Containers][ibm_containers_url]
 * [IBM Containers and Bluemix Services blog post][containers_bluemix_blog]
 * _TBD_
 
@@ -174,3 +175,5 @@ _Let's Chat on Bluemix_ is a sample application created for the purpose of demon
 [gist_nginx_deploy_url]: https://gist.github.com/osowski/8dca076ac07b5069aabe#file-nginx-deploy-sh
 [extract_vcap_url]: https://github.com/osowski/ibm-containers/blob/master/utils/docker-build/extract-vcap.py
 [containers_bluemix_blog]: https://developer.ibm.com/bluemix/2015/07/06/simplifying-distributed-docker-applications/
+[ibm_containers_url]: https://console.ng.bluemix.net/solutions/open-architecture/
+[lets_chat_url]: http://sdelements.github.io/lets-chat/
