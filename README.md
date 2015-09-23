@@ -3,7 +3,7 @@
 <p align="center">
   <img alt="Let's Chat" src="http://i.imgur.com/0a3l5VF.png" />
 </p>
-<p align="center">**running on**</p>
+<p align="center"><strong>running on</strong></p>
 <p align="center">
   <img alt="IBM Containers" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSwFL7rmMXcMDxIM0m0hiLPwJFeE23l3puGJj78bjPBYhQ78xvcZw" />
 </p>
