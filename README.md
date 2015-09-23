@@ -27,7 +27,11 @@ _TBD Architecture Diagram_
 3. Step 3
 
 ## Repository structure
-_TBD Document the repository structure and how the artifacts interact_
+**.bluemix** - The exported YAML document describing the Advanced Pipeline below.
+**bridge-app** - The manifest.yml and placeholder files to deploy the lightest-weight CloudFoundry app necessary to bind container instances.
+**lets-chat** - The artifacts necessary for building a Docker image for Let's Chat to run on IBM Containers.
+**lets-chat/scripts** - The startup script which the Dockerfile uses as it's entrypoint executable.  It calls this [extract-vcap.py][extract_vcap_url] utility script to extract the Mongo credentials from the embedded VCAP_SERVICES.  For more information on IBM Containers and the interaction with VCAP_SERVICES, you can read [this blog post][containers_bluemix_blog] on the Bluemix blog.
+**nginx** - The artifacts necessary for building a Docker image to load-balance across multiple Let's Chat servers.  Currently, it contains a static nginx.conf, which load-balances across two Let's Chat servers.
 
 ## Running the app on Bluemix
 Let's Chat is a straight-forward NodeJS application, requiring only a MongoDB as its sole datastore.  IBM Bluemix provides you with all the necessary services to run Let's Chat with minimal management overhead.  Instead of deploying and managing your own MongoDB server, this sample application leverages one of the available MongoDB services available on Bluemix today.  The provided build pipeline then dynamically links the running container instances with the available MongoDB service instance at deploy time, making this a very portable and repeatable deployment process.
@@ -64,28 +68,75 @@ Only one of the Delivery Pipeline walkthroughs below is necessary.  You do not n
 > Use this Basic Pipeline to deploy a single Let's Chat container with a public IP, accessed via http://{public_ip}:8080  
 
 11.  Once created, go to the **BUILD & DEPLOY** tab of your project.  
-12.  Create a **Build** stage & associated job with the following properties:
+12.  Create a **Build** stage & associated job with the following properties:  
   1.  **Builder Type:**  IBM Container Service  
-  2.  **Space:**  Your container-enabled space configured in Step 2 
-  3.  **Image Name:**  lets-chat-bmx  
-  3.  **Build Script:**  Use this [lets-chat-build.sh][gist_lets_chat_build_url] gist
-13.  Create a **Deploy** stage & associated job with the following properties:
-  1.  **Deployer Type:** IBM Containers on Bluemix
   2.  **Space:**  Your container-enabled space configured in Step 2  
-  3.  **Name:** lets-chat-single
-  4.  **Port:**  8080,5222
-  5.  **Deployer Script:**  The default deployer script is acceptable.
+  3.  **Image Name:**  lets-chat-bmx  
+  3.  **Build Script:**  Use this [lets-chat-build.sh][gist_lets_chat_build_url] gist  
+13.  Create a **Deploy** stage & associated job with the following properties:  
+  1.  **Deployer Type:** IBM Containers on Bluemix  
+  2.  **Space:**  Your container-enabled space configured in Step 2  
+  3.  **Name:** lets-chat-single  
+  4.  **Port:**  8080,5222  
+  5.  **Deployer Script:**  The default deployer script is acceptable.  
   6.  **Environment Properties**  
     1.  **BIND_TO**  lets-chat-bridge  
-	2.  **CONTAINER_SIZE**  tiny
+	2.  **CONTAINER_SIZE**  tiny  
 14.  This pipeline will now build whenever a commit is pushed to the forked repository.  Optionally, you can click the **Run Stage** button in the Build stage to kick off the delivery pipeline.  
-15.  Once the Build and Deploy stages have completed successfully, you can access the running Let's Chat server by the public IP address assigned.  This is available through the log of the deploy stage, the Bluemix UI, or the '''cf ic ip list''' command.
+15.  Once the Build and Deploy stages have completed successfully, you can access the running Let's Chat server by the public IP address assigned.  This is available through the log of the deploy stage, the Bluemix UI, or the ``cf ic ip list`` command.  
 
 #### Configure an Advanced Delivery Pipeline
 > Use this Advanced Pipeline to deploy two Let's Chat containers and one nginx container handling the load-balancing across them, accessed via http://{nginx_public_ip}  
 
 11.  Once created, go to the **BUILD & DEPLOY** tab of your project.  
-12.  TBD Configure advanced build and deploy of lets-chat & nginx
+12.  Create a **Build** stage named _Deploy Let's Chat Docker Image_ with 2 jobs and the following properties:  
+  1.  **Job Name:** Build Let's Chat Image  
+	1.  **Builder Type:**  IBM Container Service  
+	2.  **Space:**  Your container-enabled space configured in Step 2  
+	3.  **Image Name:**  lets-chat-bmx  
+	3.  **Build Script:**  Use this [lets-chat-build.sh][gist_lets_chat_build_url] gist  
+  2.  **Job Name:** Build Nginx Image  
+    1.  **Builder Type:**  IBM Container Service  
+	2.  **Space:**  Your container-enabled space configured in Step 2  
+	3.  **Image Name:**  lets-chat-nginx  
+	3.  **Build Script:**  Use this [nginx-build.sh][gist_nginx_build_url] gist  
+13.  Create a **Deploy** stage with 2 jobs and the following properties:  
+  1.  **Input Settings**  
+    1.  **Stage:**  Build Docker Images  
+	2.  **Job:**  Build Let's Chat Image  
+  2.  **Jobs**	
+    1.  **Job Name:**  Deploy Instance A  
+      1.  **Deployer Type:** IBM Containers on Bluemix  
+      2.  **Space:**  Your container-enabled space configured in Step 2  
+      3.  **Name:** lets-chat-a  
+      4.  **Port:**  8080,5222  
+      5.  **Deployer Script:**  Use this [lets-chat-deploy-cluster-member.sh][gist_lets_chat_deploy_url] gist  
+    2.  **Job Name:**  Deploy Instance B  
+      1.  **Deployer Type:** IBM Containers on Bluemix  
+      2.  **Space:**  Your container-enabled space configured in Step 2  
+      3.  **Name:** lets-chat-b  
+      4.  **Port:**  8080,5222  
+      5.  **Deployer Script:**  Use this [lets-chat-deploy-cluster-member.sh][gist_lets_chat_deploy_url] gist  
+  3.  **Environment Properties**  
+    1.  **BIND_TO**  lets-chat-bridge  
+	2.  **CONTAINER_SIZE**  tiny  
+	3.  **CONCURRENT_VERSIONS**  1  
+	4.  **EXPOSE_PUBLIC**  0  
+13.  Create a **Deploy** stage with 1 job and no additional properties:  
+  1.  **Input Settings**  
+    1.  **Input Type:** Build Artifacts  
+    2.  **Stage:** Build Docker Images  
+    3.  **Job:** Build Nginx Image  
+  2.  **Jobs**  
+    1.  **Job Name:**  Deploy Nginx Instance  
+      1.  **Deployer Type:** IBM Containers on Bluemix  
+      2.  **Space:**  Your container-enabled space configured in Step 2  
+      3.  **Name:** nginx  
+      4.  **Port:**  80  
+	  5.  **Optional deploy arguments:**  --link __CIDSA__:lets-chat-1 --link __CIDSB__:lets-chat-2  
+      6.  **Deployer Script:**  Use this [nginx-deploy.sh][gist_nginx_deploy_url] gist  
+14.  This pipeline will now build whenever a commit is pushed to the forked repository.  Optionally, you can click the **Run Stage** button in the Build stage to kick off the delivery pipeline.  
+15.  Once the Build and both Deploy stages have completed successfully, you can access the running Let's Chat server by the public IP address assigned.  This is available through the log of the nginx deploy stage, the Bluemix UI, or the ``cf ic ip list`` command.  
 
 ## Run the app locally
 _TBD How to run locally and still leverage Bluemix services dynamically!_
@@ -101,6 +152,7 @@ There is no API made available through this sample application.
 
 #### IBM Containers
 * [IBM Containers](https://console.ng.bluemix.net/solutions/open-architecture/)
+* [IBM Containers and Bluemix Services blog post][containers_bluemix_blog]
 * _TBD_
 
 _Let's Chat on Bluemix_ is a sample application created for the purpose of demonstrating a Docker application on IBM Containers. The program is provided as-is with no warranties of any kind, express or implied. 
@@ -112,3 +164,8 @@ _Let's Chat on Bluemix_ is a sample application created for the purpose of demon
 [cloud_foundry_url]: https://github.com/cloudfoundry/cli
 [current_repo_url]: https://github.com/osowski/lets-chat-bluemix
 [gist_lets_chat_build_url]: https://gist.github.com/osowski/8dca076ac07b5069aabe#file-lets-chat-build-sh
+[gist_nginx_build_url]: https://gist.github.com/osowski/8dca076ac07b5069aabe#file-nginx-build-sh
+[gist_lets_chat_deploy_a_url]: https://gist.github.com/osowski/8dca076ac07b5069aabe#file-lets-chat-deploy-cluster-member-a-sh
+[gist_nginx_deploy_url]: https://gist.github.com/osowski/8dca076ac07b5069aabe#file-nginx-deploy-sh
+[extract_vcap_url]: https://github.com/osowski/ibm-containers/blob/master/utils/docker-build/extract-vcap.py
+[containers_bluemix_blog]: https://developer.ibm.com/bluemix/2015/07/06/simplifying-distributed-docker-applications/
