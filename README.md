@@ -1,8 +1,12 @@
 # Let's Chat on Bluemix Overview
 
-<div style="text-align:center"><img style="align: center;" alt="Let's Chat" src="http://i.imgur.com/0a3l5VF.png" /></div>  
-->**running on**<-  
-<div style="text-align:center"><img style="align: center;" alt="IBM Containers" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSwFL7rmMXcMDxIM0m0hiLPwJFeE23l3puGJj78bjPBYhQ78xvcZw" /></div>  
+<p align="center">
+  <img alt="Let's Chat" src="http://i.imgur.com/0a3l5VF.png" />
+</p>
+<p align="center">**running on**</p>
+<p align="center">
+  <img alt="IBM Containers" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSwFL7rmMXcMDxIM0m0hiLPwJFeE23l3puGJj78bjPBYhQ78xvcZw" />
+</p>
 
 
 This repository will show you how to run the open-source [_Let's Chat_](http://sdelements.github.io/lets-chat/) application on IBM Containers in IBM Bluemix.  The provided Dockerfiles, scripts, and pipeline file will build & deploy the necessary Docker images for the Let's Chat application and an nginx load-balancer and link the running containers to a MongoDB service instance in IBM Bluemix.
