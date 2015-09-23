@@ -1,5 +1,8 @@
 # Let's Chat on Bluemix Overview
 
+![Let's Chat](https://camo.githubusercontent.com/59e42ea1b29e58a290557dd2425931eec1185e78/687474703a2f2f692e696d6775722e636f6d2f3061336c3556462e706e67)
+![IBM Containers](https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSwFL7rmMXcMDxIM0m0hiLPwJFeE23l3puGJj78bjPBYhQ78xvcZw)
+
 This repository will show you how to run the open-source [_Let's Chat_](http://sdelements.github.io/lets-chat/) application on IBM Containers in IBM Bluemix.  The provided Dockerfiles, scripts, and pipeline file will build & deploy the necessary Docker images for the Let's Chat application and an nginx load-balancer and link the running containers to a MongoDB service instance in IBM Bluemix.
 
 IBM Containers is an Enterprise-grade Docker container service, available on IBM Bluemix.  Provided here are all the necessary artifacts to build and deploy the sample application and deploy it on IBM Containers, leveraging additional IBM Bluemix services where appropriate.  As additional capabilities are made available through IBM Bluemix, this sample application repository will be updated to take advantage of them as appropriate.
@@ -34,18 +37,17 @@ To deploy the sample application, follow the steps below or click the **Deploy t
 ### Setup Bluemix pre-requisites
 1. Create a Bluemix Account  
 [Sign up][bluemix_signup_url] for Bluemix, or use an existing account.
-2. Enable your Bluemix Account for usage of IBM Containers  (_Optional - only required if not already completed)  
-Select an existing Space or create a new one in the Bluemix Dashboard and click _Start Containers_.  You will be prompted to create a private Docker registry in Bluemix.  
+2. Enable your Bluemix Account for usage of IBM Containers  (_Optional_ - only required if not already completed)  
+Select an existing Space or create a new one in the Bluemix Dashboard and click **START CONTAINERS**.  You will be prompted to create a private Docker registry in Bluemix.  
 **Note:** This cannot be changed once it is created.  So keep it short and confined to something you wouldn't be embarrassed to share with your peers.
 3.  Create the Bluemix bridge application  
- 1.  From the [Bluemix Dashboard][bluemix_dashboard_url], click **CREATE APP**.  
- 2.  Select the **WEB** and **SDK for Node.js** and click **CONTINUE**.  
- 3.  Enter an application name that you will use to bind the container instances to.  This walkthrough will use _lets-chat-bridge_ for reference.  
- 4.  Click **FINISH**  
+ 1.  This can be done from either the Bluemix UI or from the CloudFoundry CLI.
+ 2.  This walkthrough will use the name _lets-chat-bridge_ for reference.  Make note of the name used, as it will be needed to bind the container instances to later on.
 4.  Create the MongoDB service instance  
- 1.  From the [Bluexmix Catalog ][bluemix_catalog_url], search for **mongolab** and select **View More**.  
- 2.  Select your newly deployed app from Step 3 in the _App:_ dropdown and click **CREATE**.  
- 3.  When prompted to restage your application, click **RESTAGE** and wait a few moments for your application to be running again.
+ 1.  This can be done from either the Bluemix UI or from the CloudFoundry CLI.  
+ 2.  Select the **MongoLab** service type and the **Sandbox** plan.  
+ **Note:**  Any type of MongoDB service is usable, however the MongoLab service is used here due to it's simplicity of initial user onboarding.  As the recently-acquired Compose.IO offerings are more tightly integrated into the Bluemix experience, this sample application will be updated to use those instead.
+ 3.  If in the Bluemix UI and rompted to restage your application, click **RESTAGE** and wait a few moments for your application to be running again.
 
 ### Create your Bluemix DevOps Services project
 5.  Fork the [current repository][current_repo_url].
@@ -55,11 +57,33 @@ Select an existing Space or create a new one in the Bluemix Dashboard and click 
 9.  Ensure under **Make this a Bluemix Project**, that the space selected is the space you deployed your bridge application to above.  
 10.  Click **CREATE** and wait for your Bluemix DevOps Services project to be created.  Now whenever any changes are made in your forked GitHub repository, they will flow into this project and kick off the Delivery Pipeline you will configure in the next step.
 
-### Configure the Delivery Pipeline - Basic
-11.  Once created, go to the **BUILD & DEPLOY** tab of your project.  
-12.  TBD Configure simple build and deploy of lets-chat/Dockerfile
+### Configure the Delivery Pipeline
+Only one of the Delivery Pipeline walkthroughs below is necessary.  You do not need to do both of them.
 
-### Configure the Delivery Pipeline - Advanced
+#### Configure a Basic Delivery Pipeline
+> Use this Basic Pipeline to deploy a single Let's Chat container with a public IP, accessed via http://{public_ip}:8080  
+11.  Once created, go to the **BUILD & DEPLOY** tab of your project.  
+12.  Create a **Build** stage & associated job with the following properties:
+  1.  **Builder Type:**  IBM Container Service  
+  2.  **Space:**  Your container-enabled space configured in Step 2 
+  3.  **Image Name:**  lets-chat-bmx  
+  3.  **Build Script:**  
+		TBD Use embedded gist  
+13.  Create a **Deploy** stage & associated job with the following properties:
+  1.  **Deployer Type:** IBM Containers on Bluemix
+  2.  **Space:**  Your container-enabled space configured in Step 2  
+  3.  **Name:** lets-chat-single
+  4.  **Port:**  8080,5222
+  5.  **Deployer Script:**  
+		TBD Use embedded gist
+  6.  **Environment Properties**  
+    1.  **BIND_TO**  lets-chat-bridge  
+	2.  **CONTAINER_SIZE**  tiny
+14.  This pipeline will now build whenever a commit is pushed to the forked repository.  Optionally, you can click the **Run Stage** button in the Build stage to kick off the delivery pipeline.  
+15.  Once the Build and Deploy stages have completed successfully, you can access the running Let's Chat server by the public IP address assigned.  This is available through the log of the deploy stage, the Bluemix UI, or the '''cf ic ip list''' command.
+
+#### Configure an Advanced Delivery Pipeline
+> Use this Advanced Pipeline to deploy two Let's Chat containers and one nginx container handling the load-balancing across them, accessed via http://{nginx_public_ip}  
 11.  Once created, go to the **BUILD & DEPLOY** tab of your project.  
 12.  TBD Configure advanced build and deploy of lets-chat & nginx
 
