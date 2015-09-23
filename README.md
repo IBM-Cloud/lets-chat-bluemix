@@ -1,7 +1,7 @@
 # Let's Chat on Bluemix Overview
 
-![Let's Chat](https://camo.githubusercontent.com/59e42ea1b29e58a290557dd2425931eec1185e78/687474703a2f2f692e696d6775722e636f6d2f3061336c3556462e706e67)
-![IBM Containers](https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSwFL7rmMXcMDxIM0m0hiLPwJFeE23l3puGJj78bjPBYhQ78xvcZw)
+![Let's Chat](https://camo.githubusercontent.com/59e42ea1b29e58a290557dd2425931eec1185e78/687474703a2f2f692e696d6775722e636f6d2f3061336c3556462e706e67)  
+![IBM Containers](https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSwFL7rmMXcMDxIM0m0hiLPwJFeE23l3puGJj78bjPBYhQ78xvcZw)  
 
 This repository will show you how to run the open-source [_Let's Chat_](http://sdelements.github.io/lets-chat/) application on IBM Containers in IBM Bluemix.  The provided Dockerfiles, scripts, and pipeline file will build & deploy the necessary Docker images for the Let's Chat application and an nginx load-balancer and link the running containers to a MongoDB service instance in IBM Bluemix.
 
@@ -47,7 +47,7 @@ Select an existing Space or create a new one in the Bluemix Dashboard and click 
  1.  This can be done from either the Bluemix UI or from the CloudFoundry CLI.  
  2.  Select the **MongoLab** service type and the **Sandbox** plan.  
  **Note:**  Any type of MongoDB service is usable, however the MongoLab service is used here due to it's simplicity of initial user onboarding.  As the recently-acquired Compose.IO offerings are more tightly integrated into the Bluemix experience, this sample application will be updated to use those instead.
- 3.  If in the Bluemix UI and rompted to restage your application, click **RESTAGE** and wait a few moments for your application to be running again.
+ 3.  If you are in the Bluemix UI and prompted to restage your application, click **RESTAGE** and wait a few moments for your application to be running again.
 
 ### Create your Bluemix DevOps Services project
 5.  Fork the [current repository][current_repo_url].
@@ -62,20 +62,19 @@ Only one of the Delivery Pipeline walkthroughs below is necessary.  You do not n
 
 #### Configure a Basic Delivery Pipeline
 > Use this Basic Pipeline to deploy a single Let's Chat container with a public IP, accessed via http://{public_ip}:8080  
+
 11.  Once created, go to the **BUILD & DEPLOY** tab of your project.  
 12.  Create a **Build** stage & associated job with the following properties:
   1.  **Builder Type:**  IBM Container Service  
   2.  **Space:**  Your container-enabled space configured in Step 2 
   3.  **Image Name:**  lets-chat-bmx  
-  3.  **Build Script:**  
-		TBD Use embedded gist  
+  3.  **Build Script:**  Use this [lets-chat-build.sh][gist_lets_chat_build_url] gist
 13.  Create a **Deploy** stage & associated job with the following properties:
   1.  **Deployer Type:** IBM Containers on Bluemix
   2.  **Space:**  Your container-enabled space configured in Step 2  
   3.  **Name:** lets-chat-single
   4.  **Port:**  8080,5222
-  5.  **Deployer Script:**  
-		TBD Use embedded gist
+  5.  **Deployer Script:**  The default deployer script is acceptable.
   6.  **Environment Properties**  
     1.  **BIND_TO**  lets-chat-bridge  
 	2.  **CONTAINER_SIZE**  tiny
@@ -84,6 +83,7 @@ Only one of the Delivery Pipeline walkthroughs below is necessary.  You do not n
 
 #### Configure an Advanced Delivery Pipeline
 > Use this Advanced Pipeline to deploy two Let's Chat containers and one nginx container handling the load-balancing across them, accessed via http://{nginx_public_ip}  
+
 11.  Once created, go to the **BUILD & DEPLOY** tab of your project.  
 12.  TBD Configure advanced build and deploy of lets-chat & nginx
 
@@ -111,3 +111,4 @@ _Let's Chat on Bluemix_ is a sample application created for the purpose of demon
 [devops_services_url]: https://hub.jazz.net/
 [cloud_foundry_url]: https://github.com/cloudfoundry/cli
 [current_repo_url]: https://github.com/osowski/lets-chat-bluemix
+[gist_lets_chat_build_url]: https://gist.github.com/osowski/8dca076ac07b5069aabe#file-lets-chat-build-sh
