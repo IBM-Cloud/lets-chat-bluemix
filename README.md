@@ -13,7 +13,7 @@ This repository will show you how to run the open-source [_Let's Chat_][lets_cha
 
 IBM Containers is an Enterprise-grade Docker container service, available on IBM Bluemix.  Provided here are all the necessary artifacts to build and deploy the sample application and deploy it on IBM Containers, leveraging additional IBM Bluemix services where appropriate.  As additional capabilities are made available through IBM Bluemix, this sample application repository will be updated to take advantage of them as appropriate.
 
-## Deploy to Bluemix  
+## Deploy to Bluemix, using an [Advanced Delivery Pipeline](#configure-an-advanced-delivery-pipeline]  
 **(requires [pre-req steps](#setup-bluemix-pre-requisites) to be run first)**  
 [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy)
 
@@ -23,7 +23,7 @@ I'll let the [SD Elements][lets_chat_url] team describe Let's Chat here:
 
 Similar to Slack, it's quick to start and even simpler to use.  Once the application is deployed, follow the steps below to start collaborating with your teammates or audience immediately!
 
-_TBD Architecture Diagram_
+![Let's Chat Screenshot](http://i.imgur.com/C4uMD67.png)
 
 1. Step 1
  
@@ -94,6 +94,8 @@ Only one of the Delivery Pipeline walkthroughs below is necessary.  You do not n
 #### Configure an Advanced Delivery Pipeline
 > Use this Advanced Pipeline to deploy two Let's Chat containers and one nginx container handling the load-balancing across them, accessed via http://{nginx_public_ip}  
 
+<img src="./github_content/lets-chat-advanced-deploy-architecture.png" width="664px"><br>This an architectural overview of the Advanced Delivery Pipeline that make this app run.<br>
+
 31.  Once created, go to the **BUILD & DEPLOY** tab of your project.  
 32.  Create a **Build** stage named _Build Docker Images_ with 2 jobs and the following properties:  
   1.  **Job Name:** Build Let's Chat Image  
@@ -159,7 +161,6 @@ There is no API made available through this sample application.
 * [IBM Containers][ibm_containers_url]
 * [IBM Containers Service Overview video](https://www.youtube.com/watch?v=WMUiBE_7MoU)
 * [IBM Containers and Bluemix Services blog post][containers_bluemix_blog]
-* _TBD_
 
 _Let's Chat on Bluemix_ is a sample application created for the purpose of demonstrating a Docker application on IBM Containers. The program is provided as-is with no warranties of any kind, express or implied. 
 
