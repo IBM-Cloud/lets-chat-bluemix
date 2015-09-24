@@ -17,15 +17,15 @@ stages:
     IMAGE_NAME: lets-chat-bmx
     USE_CACHED_LAYERS: 'true'
     COMMAND: "#!/bin/bash\nlog_and_echo \"$LABEL\" \"Starting build script\"\n\ncd\
-      \ ${WORKSPACE}/dockerfiles/lets-chat\n\n######################################\n\
+      \ ${WORKSPACE}/lets-chat\n\n######################################\n\
       # Build Container via Dockerfile     #\n######################################\n\
       \nif [ -f Dockerfile ]; then \n    log_and_echo \"$LABEL\" \"Building ${FULL_REPOSITORY_NAME}\"\
       \n    ${EXT_DIR}/utilities/sendMessage.sh -l info -m \"New container build requested\
       \ for ${FULL_REPOSITORY_NAME}\"\n    # build image\n    BUILD_COMMAND=\"\"\n\
       \    if [ \"${USE_CACHED_LAYERS}\" == \"true\" ]; then \n        BUILD_COMMAND=\"\
-      build --pull --tag ${FULL_REPOSITORY_NAME} ${WORKSPACE}/dockerfiles/lets-chat\"\
+      build --pull --tag ${FULL_REPOSITORY_NAME} ${WORKSPACE}/lets-chat\"\
       \n        ice_retry ${BUILD_COMMAND}\n        RESULT=$?\n    else \n       \
-      \ BUILD_COMMAND=\"build --no-cache --tag ${FULL_REPOSITORY_NAME} ${WORKSPACE}/dockerfiles/lets-chat\"\
+      \ BUILD_COMMAND=\"build --no-cache --tag ${FULL_REPOSITORY_NAME} ${WORKSPACE}/lets-chat\"\
       \n        ice_retry ${BUILD_COMMAND}\n        RESULT=$?\n    fi \n\n    if [\
       \ $RESULT -ne 0 ]; then\n        log_and_echo \"$ERROR\" \"Error building image\"\
       \n        ice info \n        ice images\n        ${EXT_DIR}/print_help.sh\n\
@@ -56,7 +56,7 @@ stages:
       # Based on the organization and space selected in the Job credentials are in\
       \ place for both IBM Container Service and IBM Bluemix \n#####################\n\
       # Run unit tests    #\n#####################\nlog_and_echo \"$LABEL\" \"No unit\
-      \ tests cases have been checked in\"\n\ncd ${WORKSPACE}/dockerfiles/lets-chat/nginx\n\
+      \ tests cases have been checked in\"\n\ncd ${WORKSPACE}/nginx\n\
       \n######################################\n# Build Container via Dockerfile \
       \    #\n######################################\n\n# REGISTRY_URL=${CCS_REGISTRY_HOST}/${NAMESPACE}\n\
       # FULL_REPOSITORY_NAME=${REGISTRY_URL}/${IMAGE_NAME}:${APPLICATION_VERSION}\n\
@@ -66,9 +66,9 @@ stages:
       \ -l info -m \"New container build requested for ${FULL_REPOSITORY_NAME}\"\n\
       \    # build image\n    BUILD_COMMAND=\"\"\n    if [ \"${USE_CACHED_LAYERS}\"\
       \ == \"true\" ]; then \n        BUILD_COMMAND=\"build --pull --tag ${FULL_REPOSITORY_NAME}\
-      \ ${WORKSPACE}/dockerfiles/lets-chat/nginx\"\n        ice_retry ${BUILD_COMMAND}\n\
+      \ ${WORKSPACE}/nginx\"\n        ice_retry ${BUILD_COMMAND}\n\
       \        RESULT=$?\n    else \n        BUILD_COMMAND=\"build --no-cache --tag\
-      \ ${FULL_REPOSITORY_NAME} ${WORKSPACE}/dockerfiles/lets-chat/nginx\"\n     \
+      \ ${FULL_REPOSITORY_NAME} ${WORKSPACE}/nginx\"\n     \
       \   ice_retry ${BUILD_COMMAND}\n        RESULT=$?\n    fi \n\n    if [ $RESULT\
       \ -ne 0 ]; then\n        log_and_echo \"$ERROR\" \"Error building image\"\n\
       \        ice info \n        ice images\n        ${EXT_DIR}/print_help.sh\n \
