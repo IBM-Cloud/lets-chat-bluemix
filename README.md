@@ -13,7 +13,8 @@ This repository will show you how to run the open-source [_Let's Chat_][lets_cha
 
 IBM Containers is an Enterprise-grade Docker container service, available on IBM Bluemix.  Provided here are all the necessary artifacts to build and deploy the sample application and deploy it on IBM Containers, leveraging additional IBM Bluemix services where appropriate.  As additional capabilities are made available through IBM Bluemix, this sample application repository will be updated to take advantage of them as appropriate.
 
-## Deploy to Bluemix (requires [pre-req steps](#setup-bluemix-pre-requisites) to be run first)
+## Deploy to Bluemix  
+**(requires [pre-req steps](#setup-bluemix-pre-requisites) to be run first)**
 [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy)
 
 ## How it works
