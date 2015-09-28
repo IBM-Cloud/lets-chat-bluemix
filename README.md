@@ -33,7 +33,7 @@ Similar to Slack, it's quick to start and even simpler to use.  Once the applica
 
 4.  Begin chatting with your teammates!  
 
-5.  Additional configuration documentation is available on the [Let's Chat Wiki][lets-chat-wiki-url], for direction on authentication, self-registration, and login throttling.
+5.  Additional configuration documentation is available on the [Let's Chat Wiki][lets_chat_wiki_url], for direction on authentication, self-registration, and login throttling.
 
 ## Repository structure
 **`.bluemix/`** - The exported YAML document describing the Advanced Pipeline below.  
