@@ -25,11 +25,15 @@ Similar to Slack, it's quick to start and even simpler to use.  Once the applica
 
 ![Let's Chat Screenshot](http://i.imgur.com/C4uMD67.png)
 
-1. Step 1
- 
-2. Step 2
+1.  Once the Let's Chat environment is up and running, you will need to create users.  The easiest way to do this is to create a new user, by clicking on **I need an account**.  Enter the necessary information, making sure the email is unique, and click **Register**.  
 
-3. Step 3
+2.  After creating an initial user, enter your registered user's credentials and click **Sign in**.
+
+3.  You'll see all the rooms listed upon logging in, along with any other users who are currently logged into the system.  Enter an existing room or create a new room.  
+
+4.  Begin chatting with your teammates!  
+
+5.  Additional configuration documentation is available on the [Let's Chat Wiki][lets-chat-wiki-url], for direction on authentication, self-registration, and login throttling.
 
 ## Repository structure
 **`.bluemix/`** - The exported YAML document describing the Advanced Pipeline below.  
@@ -178,3 +182,4 @@ _Let's Chat on Bluemix_ is a sample application created for the purpose of demon
 [containers_bluemix_blog]: https://developer.ibm.com/bluemix/2015/07/06/simplifying-distributed-docker-applications/
 [ibm_containers_url]: https://console.ng.bluemix.net/solutions/open-architecture/
 [lets_chat_url]: http://sdelements.github.io/lets-chat/
+[lets_chat_wiki_url]: https://github.com/sdelements/lets-chat/wiki
