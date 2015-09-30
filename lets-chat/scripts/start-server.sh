@@ -7,7 +7,7 @@ if [ "$?" = "0" ]; then
 fi
 
 # Inserting sleep delay per recommendation via https://www.ng.bluemix.net/docs/containers/container_single_ov.html#container_single_cli
-sleep 35
+sleep 60
 
 #Run server
 npm start
