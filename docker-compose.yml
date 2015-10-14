@@ -1,0 +1,24 @@
+lets-chat-1:
+  build: lets-chat/
+  container_name: lets-chat-web-1
+  expose: 
+   - "8080"
+   - "5222"
+  environment:
+   - VCAP_SERVICES
+lets-chat-2:
+  build: lets-chat/
+  container_name: lets-chat-web-2
+  expose:
+   - "5222"
+   - "8080"
+  environment:
+   - VCAP_SERVICES
+nginx:
+  build:  nginx/
+  container_name: lets-chat-nginx-1
+  ports:
+   - "80:80"
+  links:
+   - lets-chat-1
+   - lets-chat-2
