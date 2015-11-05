@@ -39,7 +39,7 @@ stages:
       \  \n\n######################################################################################\n\
       # Copy any artifacts that will be needed for deployment and testing to $WORKSPACE\
       \    #\n######################################################################################\n\
-      \ cd ${WORKSPACE}\
+      \ cd ${WORKSPACE}\n\
       echo \"IMAGE_NAME=${FULL_REPOSITORY_NAME}\" >> $ARCHIVE_DIR/build.properties"
   - name: Build Nginx Image
     type: builder
@@ -83,7 +83,7 @@ stages:
       \  \n\n######################################################################################\n\
       # Copy any artifacts that will be needed for deployment and testing to $WORKSPACE\
       \    #\n######################################################################################\n\
-      \ cd ${WORKSPACE}\
+      \ cd ${WORKSPACE}\n\
       echo \"IMAGE_NAME=${FULL_REPOSITORY_NAME}\" >> $ARCHIVE_DIR/build.properties"
 - name: Deploy Let's Chat Docker Image
   inputs:
