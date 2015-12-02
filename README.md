@@ -98,7 +98,7 @@ Only one of the Delivery Pipeline walkthroughs below is necessary.  You do not n
 #### Configure an Advanced Delivery Pipeline
 > Use this Advanced Pipeline to deploy two Let's Chat containers and one nginx container handling the load-balancing across them, accessed via http://{nginx_public_ip}  
 
-<img src="./github_content/lets-chat-advanced-deploy-architecture.png" width="664px"><br>This an architectural overview of the Advanced Delivery Pipeline that make this app run.<br>
+<img src="./github_content/lets-chat-advanced-deploy-architecture.v2.png" width="664px"><br>This an architectural overview of the Advanced Delivery Pipeline that make this app run.<br>
 
 31.  Once created, go to the **BUILD & DEPLOY** tab of your project.  
 32.  Create a **Build** stage named _Build Docker Images_ with 2 jobs and the following properties:  
