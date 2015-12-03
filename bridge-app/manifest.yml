@@ -1,11 +1,11 @@
 ---
 #lets-chat-bridge manifest.yml
-declared-services:
-	lets-chat-mongo:
-		label: mongolab
-		plan: sandbox
+#declared-services:
+#	lets-chat-mongo:
+#		label: "MongoDB by Compose"
+#		plan: user-provided
 applications:
-- services:	
+- services:
   - lets-chat-mongo
   name: lets-chat-bridge
   host: lets-chat-bridge
