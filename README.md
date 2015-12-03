@@ -61,11 +61,10 @@ Select an existing Space or create a new one in the Bluemix Dashboard and click 
  1.  This can be done from either the [Bluemix Console](https://console.ng.bluemix.net/?direct=classic/#/resources) or from the CloudFoundry CLI.  
  2.  Select the **MongoDB by Compose** service type.  
  3.  This will require an active [Compose.io](https://www.compose.io/) account.  You can sign up for a [30-Day Free Trial](https://www.compose.io/signup/svelte/) for usage with this demo.
- 4.  Once you have a Compose account, create a MongoDB deployment in a region close to where you plan to deploy the application on Bluemix.  
+ 4.  Once you have a Compose account, create a MongoDB deployment in a region close to where you plan to deploy the application on Bluemix.
  5.  Copy the Host, Port, Username, and Password from the **Admin >> Connection Strings >> Mongo Console** section.    
 
      *Note:* You may need to manually create a user.
-
  6.  Click **CREATE**.  If you are in the Bluemix UI and prompted to restage your application, click **RESTAGE** and wait a few moments for your application to be running again.
 
 ### Create your Bluemix DevOps Services project
