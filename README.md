@@ -55,13 +55,17 @@ To deploy the sample application, follow the steps below.  Integration with the 
 Select an existing Space or create a new one in the Bluemix Dashboard and click **START CONTAINERS**.  You will be prompted to create a private Docker registry in Bluemix.  
 **Note:** This cannot be changed once it is created.  So keep it short and confined to something you wouldn't be embarrassed to share with your peers.
 3.  Create the Bluemix bridge application  
- 1.  This can be done from either the Bluemix UI or from the CloudFoundry CLI.
+ 1.  This can be done from either the [Bluemix Console](https://console.ng.bluemix.net/?direct=classic/#/resources) or from the CloudFoundry CLI.
  2.  This walkthrough will use the name **lets-chat-bridge** for reference.  Make note of the name used, as it will be needed to bind the container instances to later on.
-4.  Create the MongoDB service instance  
- 1.  This can be done from either the Bluemix UI or from the CloudFoundry CLI.  
- 2.  Select the **MongoLab** service type and the **Sandbox** plan.  
- **Note:**  Any type of MongoDB service is usable, however the MongoLab service is used here due to it's simplicity of initial user onboarding.  As the recently-acquired Compose.IO offerings are more tightly integrated into the Bluemix experience, this sample application will be updated to use those instead.
- 3.  If you are in the Bluemix UI and prompted to restage your application, click **RESTAGE** and wait a few moments for your application to be running again.
+4.  Create & bind the MongoDB service instance to your **lets-chat-bridge** application
+ 1.  This can be done from either the [Bluemix Console](https://console.ng.bluemix.net/?direct=classic/#/resources) or from the CloudFoundry CLI.  
+ 2.  Select the **MongoDB by Compose** service type.  
+ 3.  This will require an active [Compose.io](https://www.compose.io/) account.  You can sign up for a [30-Day Free Trial](https://www.compose.io/signup/svelte/) for usage with this demo.
+ 4.  Once you have a Compose account, create a MongoDB deployment in a region close to where you plan to deploy the application on Bluemix.
+ 5.  Copy the Host, Port, Username, and Password from the **Admin >> Connection Strings >> Mongo Console** section.    
+
+     *Note:* You may need to manually create a user.
+ 6.  Click **CREATE**.  If you are in the Bluemix UI and prompted to restage your application, click **RESTAGE** and wait a few moments for your application to be running again.
 
 ### Create your Bluemix DevOps Services project
 5.  Fork the [current repository][current_repo_url].
@@ -98,7 +102,7 @@ Only one of the Delivery Pipeline walkthroughs below is necessary.  You do not n
 #### Configure an Advanced Delivery Pipeline
 > Use this Advanced Pipeline to deploy two Let's Chat containers and one nginx container handling the load-balancing across them, accessed via http://{nginx_public_ip}  
 
-<img src="./github_content/lets-chat-advanced-deploy-architecture.png" width="664px"><br>This an architectural overview of the Advanced Delivery Pipeline that make this app run.<br>
+<img src="./github_content/lets-chat-advanced-deploy-architecture.v2.png" width="664px"><br>This an architectural overview of the Advanced Delivery Pipeline that make this app run.<br>
 
 31.  Once created, go to the **BUILD & DEPLOY** tab of your project.  
 32.  Create a **Build** stage named _Build Docker Images_ with 2 jobs and the following properties:  
@@ -116,7 +120,7 @@ Only one of the Delivery Pipeline walkthroughs below is necessary.  You do not n
   1.  **Input Settings**  
     1.  **Stage:**  Build Docker Images  
 	2.  **Job:**  Build Let's Chat Image  
-  2.  **Jobs**	
+  2.  **Jobs**
     1.  **Job Name:**  Deploy Instance A  
       1.  **Deployer Type:** IBM Containers on Bluemix  
       2.  **Space:**  Your container-enabled space configured in [Pre-req Step 2](#setup-bluemix-pre-requisites)  
@@ -165,8 +169,9 @@ There is no API made available through this sample application.
 * [IBM Containers][ibm_containers_url]
 * [IBM Containers Service Overview video](https://www.youtube.com/watch?v=WMUiBE_7MoU)
 * [IBM Containers and Bluemix Services blog post][containers_bluemix_blog]
+* [IBM Containers Labs](https://github.com/osowski/ibm-containers-codemotion)
 
-_Let's Chat on Bluemix_ is a sample application created for the purpose of demonstrating a Docker application on IBM Containers. The program is provided as-is with no warranties of any kind, express or implied. 
+_Let's Chat on Bluemix_ is a sample application created for the purpose of demonstrating a Docker application on IBM Containers. The program is provided as-is with no warranties of any kind, express or implied.
 
 [bluemix_signup_url]: https://console.ng.bluemix.net/?cm_mmc=Display-GitHubReadMe-_-BluemixSampleApp-LetsChat-_-Docker-_-BM-Containers
 [bluemix_catalog_url]: https://console.ng.bluemix.net/catalog/
